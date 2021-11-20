@@ -40,12 +40,7 @@
 
   <label class="reg_label">Zusatzinfos</label>
   <span class="pflichtmarker"> </span>
-  <textarea name="zusatzinfos" rows="5" cols="30">
-    <?php
-    if (isset($_POST['zusatzinfos']))
-      echo $_POST['zusatzinfos'];
-    ?>
-  </textarea>
+  <textarea name="zusatzinfos" rows="5" cols="30"><?php if (isset($_POST['zusatzinfos'])) echo $_POST['zusatzinfos']; ?></textarea>
   <span class="fehlermeldung"></span>
   <br />
 

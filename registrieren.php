@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 /**
  * Festlegung der Untergrenze für die PHP-Version
  * @version: 1.0
@@ -27,39 +27,17 @@ if (0 > version_compare(PHP_VERSION, '5')) {
     </div>
     <div id="content">
         <h1>Registrierung</h1>
+
         <?php
         require_once("registrieren.inc.php");
 
-        /**
-         * Foto2Gericht
-         * Das soziale Netzwerk für Kochideen
-         * Die Registrierungsseite
-         */
         class Registrierung
         {
-            /**
-             * Registrierungsmethode
-             * – Erst Eingaben des Anwenders plausibilisieren
-             * – Dann in der MySQL-Datenbank eintragen, wenn die 
-             *   Plausibilisierung keine Fehler ergeben hat
-             */
             public function registrieren()
             {
                 if ($this->plausibilisieren()) $this->eintragen_db();
             }
 
-            /**
-             * Plausibilisierungsmethode
-             * Testet die einzelnen Eingabefelder des
-             * Registrierungsformulars gegenüber
-             * – den Notwendigkeiten in der MySQL-Datenbank und
-             * – weiteren Anforderungen, die die Logik
-             * des Netzwerks fordert.
-             * Die Eingaben stehen im globalen Array $_POST
-             * zur Verfügung
-             * @return true, wenn die Plausibilisierung
-             * keine Fehler ergab – sonst false
-             */
             private function plausibilisieren()
             {
                 // Fehlervariable
@@ -90,14 +68,34 @@ if (0 > version_compare(PHP_VERSION, '5')) {
                 else return false;
             }
 
-            /**
-             * Eintragen der Anmeldedaten in die Datenbank
-             * Die Eingaben stehen im globalen Array $_POST
-             * zur Verfügung
-             */
             private function eintragen_db()
             {
-                echo "Daten eintragen!";
+                require_once("db.inc.php");
+
+                if ($stmt = $pdo->prepare(
+                    "INSERT INTO mitglieder" .
+                        " (name, vorname, email, zusatzinfos, rolle, userid, pw)" .
+                        " VALUES (:name, :vorname, :email, :zusatzinfos, :rolle, :userid, :pw)"
+                )) {
+                    if ($stmt->execute(
+                        array(
+                            ':name' => $_POST["name"],
+                            ':vorname' => $_POST["vorname"],
+                            ':email' => $_POST["email"],
+                            ':zusatzinfos' => $_POST["zusatzinfos"],
+                            ':rolle' => "Mitglied",
+                            ':userid' => $_POST["userid"],
+                            ':pw' => md5($_POST["pw"])
+                        )
+                    )) {
+                        $_SESSION["name"] = $_POST["userid"];
+                        $_SESSION["login"] = "false";
+                        $dat = "index.php";
+                    } else {
+                        $dat = "regfehler.php";
+                    }
+                    header("Location: $dat");
+                }
             }
         }
 

@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 /**
  * Festlegung der Untergrenze für die PHP-Version
  * @version: 1.0
@@ -57,7 +57,27 @@ if (0 > version_compare(PHP_VERSION, '5')) {
 
             private function anmelden_db()
             {
-                echo "Login durchführen!";
+                $vorhanden = false;
+                require_once("db.inc.php");
+
+                if ($stmt = $pdo->prepare("SELECT userid, pw FROM mitglieder")) {
+                    $stmt->execute();
+                    while ($row = $stmt->fetch()) {
+                        if (isset($_POST["userid"]) && $_POST["userid"] == $row['userid'] && md5($_POST["pw"]) == $row['pw']) {
+                            $vorhanden = true;
+                            break;
+                        }
+                    }
+                }
+                if ($vorhanden) {
+                    var_dump($_SESSION);
+                    $_SESSION["name"] = $_POST["userid"];
+                    $_SESSION["login"] = "true";
+                    $dat = "index.php";
+                } else {
+                    $dat = "loginfehler.php";
+                }
+                header("Location: $dat");
             }
         }
 
