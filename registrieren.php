@@ -21,15 +21,15 @@ if (0 > version_compare(PHP_VERSION, '5')) {
 <body>
     <div id="nav">
         <?php
-        require_once("nav.php");
-        require_once("plausi.inc.php");
+        @require("nav.php");
+        @require("plausi.inc.php");
         ?>
     </div>
     <div id="content">
         <h1>Registrierung</h1>
 
         <?php
-        require_once("registrieren.inc.php");
+        @require("registrieren.inc.php");
 
         class Registrierung
         {
@@ -70,7 +70,7 @@ if (0 > version_compare(PHP_VERSION, '5')) {
 
             private function eintragen_db()
             {
-                require_once("db.inc.php");
+                @require_once("db.inc.php");
 
                 if ($stmt = $pdo->prepare(
                     "INSERT INTO mitglieder" .

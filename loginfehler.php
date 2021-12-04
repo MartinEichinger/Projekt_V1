@@ -17,13 +17,13 @@ if (0 > version_compare(PHP_VERSION, '5')) {
 <body>
     <div id="nav">
         <?php
-        require("nav.php");
+        @require("nav.php");
         ?>
     </div>
     <div id="content">
         <h1>Anmeldefehler</h1>
         <?php
-        require("login.inc.php");
+        @require("login.inc.php");
         class LoginFehler
         {
             public function fehler()

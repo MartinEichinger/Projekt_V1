@@ -1,6 +1,11 @@
 <?php
-setcookie("Image2Food", time(), time() + (60 * 60 * 24 * 120), "/", "localhost", false, true);
 session_start();
+setcookie("Image2Food", time(), time() + (60 * 60 * 24 * 120), "/", "localhost", false, true);
+
+class MeineAusnahme extends Exception
+{
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -15,14 +20,21 @@ session_start();
 <body>
     <div id="nav">
         <?php
-        //var_dump($_SESSION);
-        if (
-            isset($_SESSION["login"]) &&
-            ($_SESSION["login"] == "true")
-        ) {
-            require("navmitglieder.php");
-        } else {
-            require("nav.php");
+        try {
+            if (isset($_SESSION["login"]) && ($_SESSION["login"] == "true")) {
+                if (!@include("navmitglieder.php")) {
+                    throw new MeineAusnahme();
+                }
+            } else {
+                if (!@include("nav.php")) {
+                    throw new MeineAusnahme();
+                }
+            }
+        } catch (Exception $e) {
+            die("<h1>Image2Food - Sag mir, was ich daraus kochen kann</h1>" .
+                "<h2>Das soziale, multimediale Netzwerk für Kochideen</h2>" .
+                "<p>Leider gibt es ein Problem mit der Webseite." .
+                " Wir arbeiten daran mit Hochdruck. Besuchen Sie uns in Kürze wieder neu.</p>");
         }
         ?>
     </div>
@@ -53,6 +65,7 @@ session_start();
                 }
             }
         }
+
         $obj = new Index();
         $obj->besucher();
         ?>

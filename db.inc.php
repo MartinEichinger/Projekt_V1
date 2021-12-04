@@ -1,2 +1,8 @@
 <?php
-	$pdo = new PDO ( 'mysql:dbname=sozialesnetzwerk;host=localhost;charset=utf8', 'root', '' );
+try {
+	$pdo = new PDO('mysql:dbname=sozialesnetzwerk;host=localhost', 'root', '');
+} catch (PDOException $e) {
+	echo 'Fehler bei der Verbindung: ' .
+		$e->getMessage();
+	exit();
+}
