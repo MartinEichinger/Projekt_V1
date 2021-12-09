@@ -33,7 +33,7 @@ if (0 > version_compare(PHP_VERSION, '5')) {
 
         class Registrierung
         {
-            public function registrieren()
+            public function registrieren() 
             {
                 if ($this->plausibilisieren()) $this->eintragen_db();
             }
@@ -49,6 +49,7 @@ if (0 > version_compare(PHP_VERSION, '5')) {
                 $anmelden += $p->emailtest($_POST['email']);
                 $anmelden += $p->nutzerdatentest($_POST['userid']);
                 $anmelden += $p->nutzerdatentest($_POST['pw']);
+                $anmelden += $p->captchatest($_POST['captcha']);
 
                 // Kritische Zeichen auf der freien Eingabe
                 // der Zusatzinfos eliminieren

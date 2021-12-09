@@ -49,6 +49,9 @@ class MeineAusnahme extends Exception
                 if (isset($_SESSION['login']) && $_SESSION['login'] == "true") {
                     echo "<div id='indextext'><h3>Mitliederbereich</h3>" .
                         "Sie sind angemeldet.</div>";
+                    @require('uploadformular.inc.php');
+                    echo "<a href='vorschaubilder.php'" .
+                        " target='vorschau'>Vorschau</a>";
                 } else if (isset($_SESSION['login']) && $_SESSION['login'] == "false") {
                     echo "<div id='indextext'>Sie können sich jetzt zum Mitgliederbereich anmelden.</div>";
                 } else if (isset($_COOKIE['Image2Food'])) {

@@ -41,10 +41,11 @@ if (0 > version_compare(PHP_VERSION, '5')) {
             {
                 // Fehlervariable
                 $anmelden = 0;
-                $a = new Plausi();
+                $a = new Plausi(); 
 
                 $anmelden += $a->nutzerdatentest($_POST['userid']);
                 $anmelden += $a->nutzerdatentest($_POST['pw']);
+                $anmelden += $a->captchatest($_POST['captcha']);
 
                 // Testausgaben für den derzeitigen Stand
                 // des Projekts
