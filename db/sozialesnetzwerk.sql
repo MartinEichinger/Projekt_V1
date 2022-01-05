@@ -62,7 +62,7 @@ CREATE TABLE `mitglieder` (
   `email` varchar(30) NOT NULL,
   `fragen` int(11) NOT NULL,
   `antworten` int(11) NOT NULL,
-  `zusatzinfo` longtext NOT NULL,
+  `zusatzinfos` longtext NOT NULL,
   `rolle` enum('Admin','Mitglied') NOT NULL,
   `userid` varchar(20) NOT NULL,
   `pw` varchar(50) NOT NULL,

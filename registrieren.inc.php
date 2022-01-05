@@ -1,4 +1,4 @@
-<form method="post" action="registrieren.php">
+<form method="post" action="registrieren.php" id="regform">
   <label class="reg_label">Name</label>
   <span class="pflichtmarker"> * </span>
   <input name="name" maxlength="30" <?php
@@ -45,12 +45,15 @@
   <br />
 
   <br />
-  <img src="captchagenerieren.php" alt="Captcha"/>
+  <img src="captchagenerieren.php" alt="Captcha" class="captcha" />
   <br />
   <label class="reg_label">Captcha</label>
   <span class="pflichtmarker"> * </span>
   <input name="captcha" />
   <span class="fehlermeldung"></span>
+  <br />
 
-  <input type="submit" value="Daten absenden">
+  <input type="submit" value="Daten absenden" class="hlink">
 </form>
+
+<div id="meldung" style="top: -500px"></div>

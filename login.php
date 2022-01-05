@@ -16,6 +16,9 @@ if (0 > version_compare(PHP_VERSION, '5')) {
     <meta charset="UTF-8">
     <title>Image2Food – Sag mir was ich daraus kochen kann – Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="lib/css/stil.css" />
+    <script type="text/javascript" src="lib/js/script.js"></script>
+    <script type="text/javascript" src="lib/js/login.js"></script>
 </head>
 
 <body>
@@ -34,24 +37,24 @@ if (0 > version_compare(PHP_VERSION, '5')) {
         {
             public function _login()
             {
-                if ($this->plausibilisieren()) $this->anmelden_db();
+                $p = new Plausi();
+                if ($this->plausibilisieren()) {
+                    $this->anmelden_db();
+                } else {
+                    echo "<script>eingabefehler(0);</script>";
+                }
             }
 
             private function plausibilisieren()
             {
                 // Fehlervariable
                 $anmelden = 0;
-                $a = new Plausi(); 
+                $a = new Plausi();
 
                 $anmelden += $a->nutzerdatentest($_POST['userid']);
                 $anmelden += $a->nutzerdatentest($_POST['pw']);
                 $anmelden += $a->captchatest($_POST['captcha']);
 
-                // Testausgaben für den derzeitigen Stand
-                // des Projekts
-                echo "Die Eingaben: <hr />";
-                print_r($_POST);
-                echo "<br />Fehleranzahl: " . $anmelden . "<hr />";
                 if ($anmelden == 0) return true;
                 else return false;
             }
